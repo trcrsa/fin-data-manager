@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "cmsc408-fa2024-proj-team-business"
+name = "fin-data-manager"
 version = "0.1.0"
 description = ""
 authors = ["Carissa Trieu <trieuc3@vcu.edu>"]
@@ -21,8 +21,6 @@ python-dotenv = "^1.0.0"
 alpha-vantage = "^3.0.0"
 requests = "^2.32.3"
 notebook = "^7.2.2"
-
-
 
 [build-system]
 requires = ["poetry-core"]

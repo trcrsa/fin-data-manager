@@ -1,9 +1,6 @@
 ---
 title: CMSC 408 - Deliverable 12
 date: last-modified
-author:
-    - name: Ashwath Balaji and Carissa Trieu
-      email: balajia@vcu.edu, trieuc3@vcu.edu
 format:
     html:
         embed-resources: true
@@ -14,34 +11,17 @@ format:
 # Financial Data Manager Project
 
 ## Project Overview and Key Deliverables
-The Financial Data Manager project is a project created by two Computer Science majors also pursuing minors in General Business. The purpose of this project is to aid investors in making the best investment choices in the stock market. Our database provides the necessary financial data that an investor can find highly useful to evaluate a company's financial health and wealth, and we believe that a database will not only reduce time, but also get future investors a chance to invest utilizing a wise tool to aid them :).
-
-## List of URLs
-* [GitHub Repository](https://github.com/cmsc-vcu/cmsc408-fa2024-proj-team-business) 
-* [Pitch Video](https://vcu.mediaspace.kaltura.com/media/Carissa%20Trieus%20Personal%20Meeting%20Room/1_l7xt74sb)
-
-```{=html}
-    <iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/1888231/sp/188823100/embedIframeJs/uiconf_id/28242251/partner_id/1888231?iframeembed=true&playerId=kaltura_player&entry_id=1_l7xt74sb&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[hotspots.plugin]=1&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_gnmfjmi9" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Carissa Trieu's Personal Meeting Room"></iframe>
-```
+ The purpose of this project is to aid investors in making the best investment choices in the stock market. Our database provides the necessary financial data that an investor can find highly useful to evaluate a company's financial health and wealth. 
 
 ## Problem Description
 
 * **Problem domain**:
-Creating a database with this data would address a problem faced by investors and financial analysts. Companies can have different means of reporting which makes it inefficient and time-consuming to look at. Specifically, finding and retrieving the exact information is a waste of time for investors who want to get their data as soon as possible to make investment decisions, especially with the fast-paced and changing nature of the markets. For example, I had to look for information on multiple website wasting around 3-4 hours of time just searching for the most accurate information in order to make stock pitches for the Student Managed Investment Portfolio (SMIP) which is an investment club at VCU.
+Creating a database with this data would address a problem faced by investors and financial analysts. Companies can have different means of reporting which makes it inefficient and time-consuming to look at. 
 
 * **Need**:
 A database is needed to store and organize financial information and is useful for quicker decision-making processes and better management of all the existing data. 
 
-* **Context, scope, and perspective**: 
-The database is useful for investors and for those who want to get experience reading financial statements to make investment decisions. It takes a long time to look for accurate information about a company and we thought it would be better to have all that important information in one place for users to access that data. For example, if I wanted to decide whether or not to invest in Nvidia, I would first take a look at financial statements to see the financial health of the company to see how they’re doing and then decide whether or not the stock would be a buy, sell, or hold.
-
-* **User roles and use cases**:
-The consumer target is primarily investors in the stock market whether it is a millionaire or a novice who is just getting started. These are the people who will mostly be using our database to fetch financial data for a company they wish to know more about. For example, if an investor wants to get the earningsfor a company like Apple, they can use the database to search the company and find the earnings at a specific point of time. If an investor decides whether or not buying Apple stock would be a good decision, they can use earnings as one of the indicators to make that decision utilizing the database with the data we provide. The database will be use an API that will fetch data from a trusted source to store it in the database. 
-
-* **Security and Privacy**: 
-The only security concern that we could think of is whether or not the information from the source we get it from is accurate. Another issue could be that in case there is a data breach and all information is lost, then it will be harder for our customers to gain access to essential information.
-
-## Entity-relationship diagrams: (Note: We made the attributes shorter to make the diagram more readable.)
+## Entity-relationship diagrams
 
 ### Chen diagram
 ```{dot}
@@ -51,10 +31,10 @@ The only security concern that we could think of is whether or not the informati
 
 graph ER {
     layout=neato
-    scale=1.5 // Increase overall scale of the diagram
+    scale=1.5 
     bgcolor=transparent
-    nodesep=1.0 // Adjust spacing between nodes
-    ranksep=1.5 // Adjust vertical spacing
+    nodesep=1.0 
+    ranksep=1.5 
 
     node [fontname="Helvetica,Arial,sans-serif", fontsize=10]
     node [shape=box]; Company; Income_Stmt; Stock; Balance_Sheet; Cash_Flow; Earnings;
@@ -226,13 +206,10 @@ erDiagram
 ```
 
 
-## Web-interface design
-We chose to implement the web interface using React.js and PHP. PHP was chosen because it is highly compatible with the SQL server we have used all semester for this course, phpMyAdmin. I also have experience using React.js, and it allows us to build a dynamic and user friendly front-end page. PHP is more simple and efficient to implement than other back end development choices as well. The combination of these two development tools helped us create a responsive and interactive web application.
-
 ## Screenshots
 
 ### Image 1 - Main Screen 
-This image displays the default page of our application that runs when accessing "http://localhost:x/" (we used port 3000).
+This image displays the default page of our application.
 ![Main](images/main.png)
 
 ### Image 2 - Creating a New Record
@@ -729,9 +706,3 @@ WHERE Capital_expenditures < 0;
 run_sql_and_return_df(sql, cnx)
 ```
 
-
-## Future considerations
-For future work, we would want to connect our database to a working API instead of manual input of data. Additionally, the integration between the front end and back end could be done using different tools. React is a great tool, however, we could have also implemented Bootstrap for consistent styling. Another consideration for the future is to include security enhancements to the system. 
-
-## Reflection
-The project went well. We didn't achieve what we wanted to originally build, but we got some things working which satisfied the requirements. We had little time to insert the values into our database, and I wanted to use an API to do it dynamically, but unfortunately it didn't work. 
