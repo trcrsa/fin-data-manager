@@ -1,0 +1,119 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #FADDE1; 
+  color: black; /* text */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1em;
+  background-color: #FFC4D6; /* table background */
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+thead tr {
+  background-color: #FF87AB; /* headers */
+  color: black; /* text */
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #FFACC5; 
+}
+
+/* Alternating row colors*/
+tbody tr:nth-child(even) {
+  background-color: #FFCAD4; 
+}
+tbody tr:nth-child(odd) {
+  background-color: #FFA6C1; 
+}
+
+/* Hover color */
+tbody tr:hover {
+  background-color: #FF5D8F; /* Highlight */
+  color: white; /* text */
+}
+
+/* Buttons */
+button {
+  background-color: #FF87AB; /* button color */
+  color: black; /* text */
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+/* Hovering over button */
+button:hover {
+  background-color: #FF5D8F; 
+}
+
+button:disabled {
+  background-color: #FFC4D6; 
+  cursor: not-allowed;
+}
+
+/* Input */
+input {
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #FFACC5; 
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: #FF5D8F; /* Dark pink for focused input */
+  outline: none;
+}
+
+/* Header Styles */
+h1 {
+  color: #FF5D8F; 
+  text-align: center;
+}
+
+h2 {
+  color: #FF5D8F;
+  text-align: left;
+}
+
+.records-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between search bar and button */
+  margin-bottom: 20px;
+}
+
+.records-header input {
+  flex: 1; /* Adjust search bar to take up space */
+  margin-right: 10px; /* Add spacing between search bar and button */
+}
+
+.records-header .createnew-button {
+  font-size: 0.9em;
+  padding: 8px 15px;
+  background-color: #FF87AB;
+  border-radius: 3px;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  table {
+    font-size: 0.9em;
+  }
+
+  th, td {
+    padding: 8px 10px;
+  }
+}

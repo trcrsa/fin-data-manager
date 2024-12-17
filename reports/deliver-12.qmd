@@ -1,0 +1,737 @@
+---
+title: CMSC 408 - Deliverable 12
+date: last-modified
+author:
+    - name: Ashwath Balaji and Carissa Trieu
+      email: balajia@vcu.edu, trieuc3@vcu.edu
+format:
+    html:
+        embed-resources: true
+        html-math-method: katex
+        theme: spacelab
+---
+
+# Financial Data Manager Project
+
+## Project Overview and Key Deliverables
+The Financial Data Manager project is a project created by two Computer Science majors also pursuing minors in General Business. The purpose of this project is to aid investors in making the best investment choices in the stock market. Our database provides the necessary financial data that an investor can find highly useful to evaluate a company's financial health and wealth, and we believe that a database will not only reduce time, but also get future investors a chance to invest utilizing a wise tool to aid them :).
+
+## List of URLs
+* [GitHub Repository](https://github.com/cmsc-vcu/cmsc408-fa2024-proj-team-business) 
+* [Pitch Video](https://vcu.mediaspace.kaltura.com/media/Carissa%20Trieus%20Personal%20Meeting%20Room/1_l7xt74sb)
+
+```{=html}
+    <iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/1888231/sp/188823100/embedIframeJs/uiconf_id/28242251/partner_id/1888231?iframeembed=true&playerId=kaltura_player&entry_id=1_l7xt74sb&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[hotspots.plugin]=1&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_gnmfjmi9" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Carissa Trieu's Personal Meeting Room"></iframe>
+```
+
+## Problem Description
+
+* **Problem domain**:
+Creating a database with this data would address a problem faced by investors and financial analysts. Companies can have different means of reporting which makes it inefficient and time-consuming to look at. Specifically, finding and retrieving the exact information is a waste of time for investors who want to get their data as soon as possible to make investment decisions, especially with the fast-paced and changing nature of the markets. For example, I had to look for information on multiple website wasting around 3-4 hours of time just searching for the most accurate information in order to make stock pitches for the Student Managed Investment Portfolio (SMIP) which is an investment club at VCU.
+
+* **Need**:
+A database is needed to store and organize financial information and is useful for quicker decision-making processes and better management of all the existing data. 
+
+* **Context, scope, and perspective**: 
+The database is useful for investors and for those who want to get experience reading financial statements to make investment decisions. It takes a long time to look for accurate information about a company and we thought it would be better to have all that important information in one place for users to access that data. For example, if I wanted to decide whether or not to invest in Nvidia, I would first take a look at financial statements to see the financial health of the company to see how they’re doing and then decide whether or not the stock would be a buy, sell, or hold.
+
+* **User roles and use cases**:
+The consumer target is primarily investors in the stock market whether it is a millionaire or a novice who is just getting started. These are the people who will mostly be using our database to fetch financial data for a company they wish to know more about. For example, if an investor wants to get the earningsfor a company like Apple, they can use the database to search the company and find the earnings at a specific point of time. If an investor decides whether or not buying Apple stock would be a good decision, they can use earnings as one of the indicators to make that decision utilizing the database with the data we provide. The database will be use an API that will fetch data from a trusted source to store it in the database. 
+
+* **Security and Privacy**: 
+The only security concern that we could think of is whether or not the information from the source we get it from is accurate. Another issue could be that in case there is a data breach and all information is lost, then it will be harder for our customers to gain access to essential information.
+
+## Entity-relationship diagrams: (Note: We made the attributes shorter to make the diagram more readable.)
+
+### Chen diagram
+```{dot}
+//| label: fig-chen
+//| fig-cap: "Financial Data Manager in Chen Notation"
+//| fig-width: 100%
+
+graph ER {
+    layout=neato
+    scale=1.5 // Increase overall scale of the diagram
+    bgcolor=transparent
+    nodesep=1.0 // Adjust spacing between nodes
+    ranksep=1.5 // Adjust vertical spacing
+
+    node [fontname="Helvetica,Arial,sans-serif", fontsize=10]
+    node [shape=box]; Company; Income_Stmt; Stock; Balance_Sheet; Cash_Flow; Earnings;
+    node [shape=ellipse]; name; sector; industry; ticker; IPO_date; price;
+    stmt_id1; stmt_id2; stmt_id3; fiscal_end;
+    
+    // Income Statement Attributes
+    rev; cost_rev; gross; op_inc; net_inc; inc_before_tax; ebit; ebitda;
+    
+    // Balance Sheet Attributes
+    assets; curr_assets; cash_eq; acc_rec; debt; lt_debt; tang_assets; wc; invest_cap;
+    tang_bv; cap; shares; equity; retained; com_eq;
+    
+    // Cash Flow Attributes
+    op_cf; cap_exp; fcf; div_paid;
+    
+    // Earnings Attributes
+    earnings_id; fiscal_end_date; eps;
+
+    // Relationships (represented as diamonds)
+    node [shape=diamond, style=filled, color=lightgrey]; publishes; issues; records; flows; reports;
+
+    name -- Company;
+    sector -- Company;
+    industry -- Company;
+    ticker -- Company;
+
+    ticker -- Stock;
+    price -- Stock;
+    IPO_date -- Stock;
+
+    ticker -- Income_Stmt;
+    stmt_id1 -- Income_Stmt;
+    fiscal_end -- Income_Stmt;
+    rev -- Income_Stmt;
+    cost_rev -- Income_Stmt;
+    gross -- Income_Stmt;
+    op_inc -- Income_Stmt;
+    net_inc -- Income_Stmt;
+    inc_before_tax -- Income_Stmt;
+    ebit -- Income_Stmt;
+    ebitda -- Income_Stmt;
+
+    ticker -- Balance_Sheet;
+    stmt_id2 -- Balance_Sheet;
+    fiscal_end -- Balance_Sheet;
+    assets -- Balance_Sheet;
+    curr_assets -- Balance_Sheet;
+    cash_eq -- Balance_Sheet;
+    acc_rec -- Balance_Sheet;
+    debt -- Balance_Sheet;
+    tang_assets -- Balance_Sheet;
+    lt_debt -- Balance_Sheet;
+    wc -- Balance_Sheet;
+    invest_cap -- Balance_Sheet;
+    tang_bv -- Balance_Sheet;
+    cap -- Balance_Sheet;
+    shares -- Balance_Sheet;
+    equity -- Balance_Sheet;
+    retained -- Balance_Sheet;
+    com_eq -- Balance_Sheet;
+
+    ticker -- Cash_Flow;
+    stmt_id3 -- Cash_Flow;
+    fiscal_end -- Cash_Flow;
+    op_cf -- Cash_Flow;
+    cap_exp -- Cash_Flow;
+    fcf -- Cash_Flow;
+    div_paid -- Cash_Flow;
+
+    ticker -- Earnings;
+    earnings_id -- Earnings;
+    fiscal_end_date -- Earnings;
+    eps -- Earnings;
+
+    Company -- publishes [label="1"];
+    publishes -- Income_Stmt [label="N"];
+
+    Company -- issues [label="1"];
+    issues -- Stock [label="N"];
+
+    Company -- records [label="1"];
+    records -- Balance_Sheet [label="N"];
+
+    Company -- flows [label="1"];
+    flows -- Cash_Flow [label="N"];
+
+    Company -- reports [label="1"];
+    reports -- Earnings [label="N"];
+}
+```
+### Crows foot diagram:
+```{mermaid}
+erDiagram
+    COMPANY {
+        string ticker
+        string name
+        string sector
+        string industry
+    }
+
+    INCOME_STATEMENT {
+        int statement_id1
+        string ticker
+        date fiscal_year_end
+        float total_revenue
+        float cost_of_revenue
+        float gross_profit
+        float operating_income
+        float Net_income_common_stockholders
+        float income_before_tax
+        float ebit
+        float ebitda
+    }
+
+    STOCK {
+        string ticker
+        int company_id
+        float price
+        date IPO_date
+    }
+
+    BALANCE_SHEET {
+        string ticker
+        int statement_id2
+        date fiscal_year_end
+        float total_assets
+        float current_assets
+        float cash
+        float cash_and_cash_equivalents
+        float accounts_receivables 
+        float total_debt
+        float net_tangible_assets
+        float long_term_debt
+        float working_capital
+        float invested_capital
+        float tangible_book_value
+        float total_capitalization
+        int shares_issued
+        float stockholders_equity
+        float retained_earnings
+        float common_stock_equity
+    }
+
+    CASH_FLOW {
+        int statement_id3
+        string ticker
+        date fiscal_year_end
+        float operating_cashflow
+        float capital_expenditures
+        float free_cash_flow
+        float cash_dividends_paid
+    }
+
+    EARNINGS {
+        int earnings_id
+        string ticker
+        int earnings_id
+        int company_id
+        date fiscal_date_end
+        float reported_eps
+    }
+
+    COMPANY ||--o{ INCOME_STATEMENT : publishes
+    COMPANY ||--o{ STOCK : issues
+    COMPANY ||--o{ BALANCE_SHEET : records
+    COMPANY ||--o{ CASH_FLOW : flows
+    COMPANY ||--o{ EARNINGS : reports
+```
+
+
+## Web-interface design
+We chose to implement the web interface using React.js and PHP. PHP was chosen because it is highly compatible with the SQL server we have used all semester for this course, phpMyAdmin. I also have experience using React.js, and it allows us to build a dynamic and user friendly front-end page. PHP is more simple and efficient to implement than other back end development choices as well. The combination of these two development tools helped us create a responsive and interactive web application.
+
+## Screenshots
+
+### Image 1 - Main Screen 
+This image displays the default page of our application that runs when accessing "http://localhost:x/" (we used port 3000).
+![Main](images/main.png)
+
+### Image 2 - Creating a New Record
+This image shows the web interface screen for creating a new record. In this example, it is creating a new record in the 'Company' table.
+![Create](images/create_test.png)
+
+### Image 3 - Editing an Existing Record
+This image shows the web interface screen for updating an existing record. In this example, it is editing 'Eod_price' attribute of a record in the 'Stock' table.
+![Update](images/edit_amzn.png)
+
+### Image 4 - Deleting an Existing Record
+This image shows that records can be deleted using its primary key. In this example, it is deleting a record from the 'Stock' table, and its stock ticker is 'AAPL'.
+![Delete](images/delete_aapl.png)
+
+### Image 5 - Running a Query 
+This image shows how the menu of queries can be ran. There is a dropdown selection of all possible reports to view. In this example, the first query is ran, and it shows all records in the 'Company' table and their corresponding tickers.
+![Running a query](images/query_run.png)
+
+### Image 6 - Filtering a Table
+This image shows how each table can be filtered. in this example, I wanted to see all records in the Technology sector.
+![Filtering 'Technology'](images/filter_technology.png)
+
+
+## Reports
+### SQL DDL
+```{python}
+#| echo: false
+
+import os
+import re
+import requests
+import pandas as pd
+from tabulate import tabulate
+from dotenv import load_dotenv
+from sqlalchemy import create_engine, text
+from sqlalchemy.exc import ArgumentError, NoSuchModuleError, OperationalError, ProgrammingError
+
+# Function to execute SQL and return DataFrame
+def run_sql_and_return_df(sql, cnx):
+    """Given an SQL command and connection string, return a DataFrame."""
+    
+    # Check if the connection is None
+    if cnx is None:
+        error_message = "No valid connection. See above."
+        df = pd.DataFrame({'ErrorType': ['ConnectionError'], 'ErrorMessage': [error_message]})
+        return df  # Return DataFrame, not string
+    
+    try:
+        df = pd.read_sql(sql, cnx)
+        if df.empty:
+            # Create a single-row DataFrame with all columns as None
+            df = pd.DataFrame([["no records returned"] + [''] * (len(df.columns) - 1)], columns=df.columns)
+        
+        return df  # Return DataFrame object, not HTML string
+    
+    except OperationalError as e:
+        error_message = f"Operational Error: {str(e)}"
+        df = pd.DataFrame({'ErrorType': ['OperationalError'], 'ErrorMessage': [error_message]})
+    except ProgrammingError as e:
+        error_message = f"Programming Error: {str(e)}"
+        df = pd.DataFrame({'ErrorType': ['ProgrammingError'], 'ErrorMessage': [error_message]})
+    except Exception as e:
+        error_message = f"Unknown Error: {str(e)}"
+        df = pd.DataFrame({'ErrorType': ['UnknownError'], 'ErrorMessage': [error_message]})
+    
+    return df  # Always return DataFrame object, not string
+
+
+# Function to execute SQL and return HTML with additional information
+def run_sql_and_return_html(cnx, sql, show_size=True):
+    """Executes SQL and returns HTML output, optionally showing row and column counts."""
+    df = run_sql_and_return_df(cnx, sql)
+
+    # Check if df is a DataFrame before proceeding
+    if isinstance(df, pd.DataFrame):
+        html_output = df.to_html(index=False, na_rep="NULL", justify="center")
+        html_output = re.sub(r'\bNone\b', 'NULL', html_output)
+    
+        # Add row and column count at the bottom if requested
+        if show_size and len(df) > 0:
+            row_count = len(df)
+            col_count = len(df.columns)
+            count_row = f'<tr><td colspan="{col_count}" style="text-align: left;">Total Rows: {row_count}, Total Columns: {col_count}</td></tr>'
+            html_output = html_output.replace('</tbody>', f'{count_row}</tbody>')
+
+        return html_output
+    else:
+        # If df is not a DataFrame (e.g., error occurred), return the error message
+        return df
+
+
+# Function to create the database engine
+def create_database_engine(uri):
+    """Create an SQLAlchemy engine with error handling and test the connection."""
+    try:
+        engine = create_engine(uri)
+        # Test the connection with a lightweight query
+        with engine.connect() as connection:
+            connection.execute(text("SELECT 1"))
+        return engine  # Return the engine if connection test is successful
+    except (ArgumentError, NoSuchModuleError, OperationalError) as e:
+        error_message = f"Database connection error: {str(e)}"
+        print(error_message)
+        return None
+    except Exception as e:
+        error_message = f"An unexpected error occurred: {str(e)}"
+        print(error_message)
+        return None
+
+# Function to split SQL commands
+def split_sql_commands(sql):
+    delimiter = ';'
+    statements = []
+    buffer = []
+    lines = sql.splitlines()
+
+    for line in lines:
+        delimiter_match = re.match(r'^DELIMITER\s+(\S+)', line.strip(), re.IGNORECASE)
+        if delimiter_match:
+            if buffer:
+                statements.append(" ".join(buffer).strip())
+                buffer = []
+            delimiter = delimiter_match.group(1)
+            continue
+        
+        parts = re.split(re.escape(delimiter), line)
+        for part in parts[:-1]:
+            buffer.append(part)
+            statements.append(" ".join(buffer).strip())
+            buffer = []
+        buffer.append(parts[-1])
+    
+    if buffer:
+        statements.append(" ".join(buffer).strip())
+        
+    return [stmt for stmt in statements if stmt]
+
+
+# Function to execute SQL DDL
+def execute_ddl_from_file(filename, cnx):
+    """
+    Executes DDL statements from a file on a given SQLAlchemy connection, 
+    capturing any errors and results.
+    """
+    messages = []
+    errors = []
+
+    with open(filename, 'r', encoding='utf-8') as file:
+        ddl_commands = file.read()
+
+    # Split commands if needed, such as if commands are separated by semicolons
+    ddl_statements = [cmd.strip() for cmd in ddl_commands.split(';') if cmd.strip()]
+
+    with cnx.connect() as connection:
+        for statement in ddl_statements:
+            try:
+                result = connection.execute(text(statement))
+                # Capture the result, if any
+                result_info = result.rowcount if result.rowcount != -1 else "No rows affected"
+                messages.append(f"Executed statement: {statement}<br/>Result: {result_info}<br/>")
+            except Exception as e:
+                # Capture the error message if execution fails
+                errors.append(f"<hr/>Error executing statement: <b>{statement}</b><br/>    Error: {str(e)}<br/>")
+
+    return messages, errors
+
+
+
+# Load credentials from .env file and check for missing variables
+load_dotenv()
+
+config_map = {
+    'user': 'CMSC408_USER',
+    'password': 'CMSC408_PASSWORD',
+    'host': 'CMSC408_HOST',
+    'database': 'DEL12_DB_NAME'
+}
+
+config = {key: os.getenv(config_map[key]) for key in config_map}
+
+errors = []
+for param in config.keys():
+    if config[param] is None:
+        errors.append(f"Missing {config_map[param]} in .env file.")
+
+# If errors, show them in DataFrame
+error_df = ""
+if errors:
+    errors.append("All subsequent SQL commands will fail.")
+    errors.append("Fix the .env file and rerun the script...")
+    error_df = pd.DataFrame({'Errors loading .env file': errors})
+else:
+    # Build engine URI
+    engine_uri = f"mysql+pymysql://{config['user']}:{config['password']}@{config['host']}/{config['database']}"
+    cnx = create_database_engine(engine_uri)
+
+# Output any error details if any
+if error_df:
+    print(error_df)
+
+
+ddl_file_name = "./my-ddl.sql"
+
+if 0 and not errors:
+    messages,errors = execute_ddl_from_file(ddl_file_name, cnx)
+
+if errors:
+    for error in errors:
+        print(f"{error}<br/>")
+else:
+    print(f"No errors detected while loading: {ddl_file_name}")
+
+```
+### 20 queries:
+1. List all companies and their stock tickers. 
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Name, Ticker 
+FROM Company;
+""" 
+run_sql_and_return_df(sql, cnx)
+```
+
+2. Find all companies from the Technology sector.
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Name 
+FROM Company 
+WHERE Sector = 'Technology';
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+3. Get the stock ticker and end of day price for Apple.
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Stock_ticker, Eod_price 
+FROM Stock 
+WHERE Stock_ticker = 'AAPL';
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+
+4. Find the companies with IPO dates after 2010
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT 
+    Company.Name, 
+    Stock.IPO_date
+FROM 
+    Stock
+JOIN 
+    Company ON Stock.Stock_ticker = Company.Ticker
+WHERE 
+    Stock.IPO_date > '2010-01-01'
+ORDER BY 
+    Stock.IPO_date;
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+
+5. Retrieve the total revenue and net income for Apple
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Total_revenue, Net_income_common_stockholders 
+FROM Income_Statement 
+WHERE Stock_ticker = (SELECT Stock_ticker FROM Company WHERE Ticker = 'AAPL');
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+6. Get the total debt for all companies in the Consumer Cyclical sector with fiscal year end
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT 
+    Company.Name, 
+    Balance_Sheet.Total_debt,
+    Balance_Sheet.Fiscal_year_end
+FROM 
+    Company 
+JOIN 
+    Stock ON Company.Ticker = Stock.Stock_ticker
+JOIN 
+    Balance_Sheet ON Stock.Stock_ticker = Balance_Sheet.Stock_ticker
+WHERE 
+    Company.Sector = 'Consumer Cyclical'
+ORDER BY 
+    Balance_Sheet.Fiscal_year_end ASC; 
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+7. List all companies with a gross profit greater than 50 million.
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Company.Name, Income_Statement.Gross_profit, Income_Statement.Fiscal_year_end
+FROM Company
+JOIN Income_Statement ON Company.Ticker = Income_Statement.Stock_Ticker
+WHERE Income_Statement.Gross_profit > 50000000
+ORDER BY Income_Statement.Fiscal_year_end ASC;
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+
+8. Find the companies with total assets greater than 1 billion.
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Company.Name, Balance_Sheet.Fiscal_year_end
+FROM Company
+JOIN Balance_Sheet ON Company.Ticker = Balance_Sheet.Stock_ticker
+WHERE Balance_Sheet.Total_assets > 1000000000
+ORDER BY Balance_Sheet.Fiscal_year_end ASC;
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+9. Get the fiscal year-end date for Microsoft from 2021 to 2024.
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Company.Name, Income_Statement.Fiscal_year_end
+FROM Company
+JOIN Income_Statement ON Company.Ticker = Income_Statement.Stock_ticker
+WHERE Company.Name = 'Microsoft Corporation'
+ORDER BY Income_Statement.Fiscal_year_end;
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+10. Find all companies that have a working capital greater than 50 million.
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Company.Name, Balance_Sheet.Working_capital
+FROM Company 
+JOIN Balance_Sheet ON Balance_Sheet.Stock_Ticker = Company.Ticker
+WHERE Balance_Sheet.Working_capital > 50000000
+ORDER BY Balance_Sheet.Working_capital
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+
+11. Get the names of companies in the 'Software Infrastructure' industry.
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Name, Industry 
+FROM Company 
+WHERE Industry = 'Software Infrastructure';
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+12. Retrieve the total revenue and cost of revenue for Tesla.
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Company.Name, Income_Statement.Total_revenue, Income_Statement.Cost_of_revenue 
+FROM Company
+JOIN Income_Statement ON Income_Statement.Stock_Ticker = Company.Ticker 
+WHERE Company.Ticker = (SELECT Ticker FROM Company WHERE Ticker = 'TSLA');
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+13. Find companies that have both net income for common stockholders greater than 10 million.
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Company.Name, Income_Statement.Net_income_common_stockholders
+FROM Company
+JOIN Income_Statement ON Income_Statement.Stock_Ticker = Company.Ticker 
+WHERE Income_Statement.Net_income_common_stockholders > 10000000;
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+
+14. Retrieve the operating cashflow for Nvidia.
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Company.Name, Cash_Flow.Operating_cashflow
+FROM Company
+JOIN Cash_Flow ON Cash_Flow.Stock_Ticker = Company.Ticker
+WHERE Company.Ticker = (SELECT Ticker FROM Company WHERE Ticker = 'NVDA');
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+15. Retreive the earnings for all tickers in the fiscal date end of 2022-12-31
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Company.Ticker, Earnings.Reported_eps, Earnings.Fiscal_date_end
+FROM Company
+JOIN Earnings ON Earnings.Stock_ticker = Company.Ticker
+WHERE Earnings.Fiscal_date_end = '2022-12-31';
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+
+16. Get the capital expenditures for companies which are greater than -2000000
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Company.Name, Cash_Flow.Capital_expenditures
+FROM Company
+JOIN Cash_Flow ON Cash_Flow.Stock_Ticker = Company.Ticker
+WHERE Cash_Flow.Capital_expenditures > -2000000;
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+
+17. Retrieve the stock ticker with fiscal year and cash dividends paid which are not null
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Company.Name, Cash_Flow.Cash_dividends_paid, Cash_Flow.Fiscal_year_end
+FROM Company
+JOIN Cash_Flow ON Cash_Flow.Stock_Ticker = Company.Ticker
+WHERE Cash_Flow.Cash_dividends_paid IS NOT NULL
+ORDER BY Cash_Flow.Fiscal_year_end
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+
+18. Retrieve the stock ticker and free cash flow where free cash flow is greater than 50,000,000
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Stock_Ticker, Free_cash_flow
+FROM Cash_Flow
+WHERE Free_cash_flow > 50000000;
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+19. Retrieve the fiscal year and operating cash flow for records where operating cash flow is less than 10,000,000.
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Fiscal_year_end, Operating_cashflow
+FROM Cash_Flow
+WHERE Operating_cashflow < 10000000;
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+
+20. Retrieve the stock ticker, fiscal year, and capital expenditures for records where capital expenditures are negative.
+```{python}
+#| echo: true
+#| output: asis
+sql = """
+SELECT Stock_Ticker, Capital_expenditures, Fiscal_year_end
+FROM Cash_Flow
+WHERE Capital_expenditures < 0;
+"""
+run_sql_and_return_df(sql, cnx)
+```
+
+
+## Future considerations
+For future work, we would want to connect our database to a working API instead of manual input of data. Additionally, the integration between the front end and back end could be done using different tools. React is a great tool, however, we could have also implemented Bootstrap for consistent styling. Another consideration for the future is to include security enhancements to the system. 
+
+## Reflection
+The project went well. We didn't achieve what we wanted to originally build, but we got some things working which satisfied the requirements. We had little time to insert the values into our database, and I wanted to use an API to do it dynamically, but unfortunately it didn't work. 
